@@ -4,39 +4,40 @@
 
 ## Демо и API
 
-| Ресурс | URL |
-|--------|-----|
-| API (backend + Swagger) | https://dd-tz-frontend.vercel.app |
-| Web-версия (demo) | https://dd-tz-frontend-demo.vercel.app |
+| Ресурс                  | URL                                    |
+| ----------------------- | -------------------------------------- |
+| API (backend + Swagger) | https://dd-tz-frontend.vercel.app      |
+| Web-версия (demo)       | https://dd-tz-frontend-demo.vercel.app |
 
 ## Тестовые данные для входа
 
-| Поле | Значение |
-|------|----------|
-| Email | `test@example.com` |
-| Пароль | `password` |
+| Поле   | Значение           |
+| ------ | ------------------ |
+| Email  | `test@example.com` |
+| Пароль | `password`         |
 
 ---
 
 ## Соответствие требованиям ТЗ
 
-| Требование | Реализация |
-|------------|------------|
-| Clean Architecture | Слои `core` / `data` / `domain` / `presentation` |
-| State management (BLoC / Provider) | `flutter_bloc` + Cubit |
-| Сетевые запросы (Dio) | `dio` + `retrofit`, interceptors, multipart upload |
-| DI (`get_it` + `injectable`) | `configureDependencies()`, codegen через `build_runner` |
-| Навигация (`go_router` / `auto_route`) | `go_router` + typed routes (`go_router_builder`) |
-| Unit-тесты UseCases и Repositories | Тесты репозиториев + cubit-тесты (бизнес-логика UI-слоя) |
-| README: архитектура + запуск | Этот файл |
-| SOLID, Clean Code | Разделение слоёв, `UseCase<T, Params>`, интерфейсы репозиториев |
-| Обработка ошибок и логирование | `Either<Failure, T>`, `Talker` + `TalkerDioLogger` |
+| Требование                             | Реализация                                                      |
+| -------------------------------------- | --------------------------------------------------------------- |
+| Clean Architecture                     | Слои `core` / `data` / `domain` / `presentation`                |
+| State management (BLoC / Provider)     | `flutter_bloc` + Cubit                                          |
+| Сетевые запросы (Dio)                  | `dio` + `retrofit`, interceptors, multipart upload              |
+| DI (`get_it` + `injectable`)           | `configureDependencies()`, codegen через `build_runner`         |
+| Навигация (`go_router` / `auto_route`) | `go_router` + typed routes (`go_router_builder`)                |
+| Unit-тесты UseCases и Repositories     | Тесты репозиториев + cubit-тесты (бизнес-логика UI-слоя)        |
+| README: архитектура + запуск           | Этот файл                                                       |
+| SOLID, Clean Code                      | Разделение слоёв, `UseCase<T, Params>`, интерфейсы репозиториев |
+| Обработка ошибок и логирование         | `Either<Failure, T>`, `Talker` + `TalkerDioLogger`              |
 
 ---
 
 ## Что реализовано
 
 ### Авторизация
+
 - Экран входа с валидацией и подсказкой с тестовыми данными
 - Экран профиля с информацией о пользователе
 - Выход с подтверждением
@@ -44,17 +45,20 @@
 - Защита маршрутов через `GoRouter` (редирект на `/login`)
 
 ### Список врачей
+
 - Поиск по имени с debounce (500 мс)
 - Фильтры: специальность, минимальный рейтинг, сортировка
 - Пагинация (бесконечная прокрутка) + pull-to-refresh
 - Офлайн-режим с кэшем врачей и специальностей
 
 ### Карточка врача
+
 - Фото, рейтинг, стаж, цена, описание, образование, достижения
 - Расписание свободных слотов
 - Отзывы с сортировкой и пагинацией
 
 ### Запись на приём
+
 - Bottom sheet с формой (жалобы, хрон. заболевания, рост, вес)
 - Прикрепление PDF через `file_picker`
 - Multipart-запрос на API
@@ -112,11 +116,11 @@ UI (Cubit) → UseCase → Repository (interface) → RepositoryImpl → API / C
 
 В Clean Architecture возможны два подхода к структуре папок:
 
-| | Layer-first (выбран) | Feature-first |
-|--|----------------------|---------------|
-| Организация | `data/`, `domain/`, `presentation/` | `features/auth/data/`, `features/auth/domain/`, … |
-| Общий код | Один `DoctorsRepository`, общие модели | Дублирование или сложные shared-модули |
-| Масштаб | Небольшие и средние приложения | Крупные команды, много независимых фич |
+|             | Layer-first (выбран)                   | Feature-first                                     |
+| ----------- | -------------------------------------- | ------------------------------------------------- |
+| Организация | `data/`, `domain/`, `presentation/`    | `features/auth/data/`, `features/auth/domain/`, … |
+| Общий код   | Один `DoctorsRepository`, общие модели | Дублирование или сложные shared-модули            |
+| Масштаб     | Небольшие и средние приложения         | Крупные команды, много независимых фич            |
 
 **Почему layer-first подходит этому проекту:**
 
@@ -156,24 +160,25 @@ Use cases без аргументов принимают `NoParams()`.
 
 ### Стек технологий
 
-| Категория | Библиотека |
-|-----------|------------|
-| State management | `flutter_bloc` |
-| DI | `injectable` + `get_it` |
-| Routing | `go_router` + `go_router_builder` |
-| HTTP | `dio` + `retrofit` |
-| Models | `freezed` + `json_serializable` + `equatable` |
-| FP utilities | `fpdart` (`Either`) |
-| Images | `cached_network_image` |
-| Local storage | `shared_preferences` |
-| Logging | `talker` + `talker_dio_logger` + `talker_flutter` |
-| File picker | `file_picker` |
+| Категория        | Библиотека                                        |
+| ---------------- | ------------------------------------------------- |
+| State management | `flutter_bloc`                                    |
+| DI               | `injectable` + `get_it`                           |
+| Routing          | `go_router` + `go_router_builder`                 |
+| HTTP             | `dio` + `retrofit`                                |
+| Models           | `freezed` + `json_serializable` + `equatable`     |
+| FP utilities     | `fpdart` (`Either`)                               |
+| Images           | `cached_network_image`                            |
+| Local storage    | `shared_preferences`                              |
+| Logging          | `talker` + `talker_dio_logger` + `talker_flutter` |
+| File picker      | `file_picker`                                     |
 
 ---
 
 ## Запуск
 
 ### Требования
+
 - Flutter SDK ^3.12
 - iOS Simulator / Android Emulator / физическое устройство
 
@@ -193,6 +198,7 @@ flutter run
 ### Debug-логирование
 
 В debug-сборке:
+
 - HTTP-логи в консоли через **Talker** (цвета: ошибки — красный, успех — зелёный, запросы — фиолетовый)
 - Кнопка с иконкой жука (справа внизу) открывает **TalkerScreen** с историей логов
 
@@ -211,16 +217,16 @@ flutter test test/data/repositories/
 
 ### Покрытие
 
-| Файл | Что проверяет |
-|------|---------------|
-| `test/data/repositories/auth_repository_impl_test.dart` | Login, logout, token, ошибки API |
-| `test/data/repositories/doctors_repository_impl_test.dart` | API, кэш, offline fallback |
-| `test/presentation/features/auth/auth_cubit_test.dart` | Старт приложения, login, logout |
-| `test/presentation/features/auth/login_screen_test.dart` | Форма, валидация, snackbar |
-| `test/presentation/features/auth/profile_screen_test.dart` | Профиль, выход |
-| `test/core/router/app_router_test.dart` | Auth-редиректы |
-| `test/presentation/features/doctors/doctors_cubit_test.dart` | Загрузка, offline |
-| `test/presentation/features/booking/booking_cubit_test.dart` | Запись, ошибки |
+| Файл                                                         | Что проверяет                    |
+| ------------------------------------------------------------ | -------------------------------- |
+| `test/data/repositories/auth_repository_impl_test.dart`      | Login, logout, token, ошибки API |
+| `test/data/repositories/doctors_repository_impl_test.dart`   | API, кэш, offline fallback       |
+| `test/presentation/features/auth/auth_cubit_test.dart`       | Старт приложения, login, logout  |
+| `test/presentation/features/auth/login_screen_test.dart`     | Форма, валидация, snackbar       |
+| `test/presentation/features/auth/profile_screen_test.dart`   | Профиль, выход                   |
+| `test/core/router/app_router_test.dart`                      | Auth-редиректы                   |
+| `test/presentation/features/doctors/doctors_cubit_test.dart` | Загрузка, offline                |
+| `test/presentation/features/booking/booking_cubit_test.dart` | Запись, ошибки                   |
 
 Инструменты: `flutter_test`, `mocktail`, `bloc_test`.
 
@@ -230,12 +236,12 @@ flutter test test/data/repositories/
 
 Маршруты в `lib/core/router/app_routes.dart` → `app_routes.g.dart`:
 
-| Класс | Путь | Экран |
-|-------|------|-------|
-| `LoginRoute` | `/login` | Вход |
-| `DoctorsRoute` | `/` | Список врачей |
+| Класс                         | Путь          | Экран          |
+| ----------------------------- | ------------- | -------------- |
+| `LoginRoute`                  | `/login`      | Вход           |
+| `DoctorsRoute`                | `/`           | Список врачей  |
 | `DoctorDetailsRoute(id: ...)` | `/doctor/:id` | Карточка врача |
-| `ProfileRoute` | `/profile` | Профиль |
+| `ProfileRoute`                | `/profile`    | Профиль        |
 
 ```dart
 const LoginRoute().go(context);
@@ -254,30 +260,3 @@ DoctorDetailsRoute(id: doctor.id).push<void>(context);
 5. Иконка профиля в AppBar → **«Выйти из аккаунта»**
 
 ---
-
-## Code Review и доработки
-
-### Исправленные баги
-
-| Проблема | Решение |
-|----------|---------|
-| Офлайн-баннер не показывался | `isFromCache` в `PaginatedDoctors`, cubit выставляет `isOffline` |
-| Мок-файл ломал запись | Реальный PDF через `file_picker` |
-| Кэш при активных фильтрах | Fallback только без фильтров/поиска |
-| Multipart + JSON Content-Type | Заголовок только для non-FormData |
-| Flash защищённых экранов | Redirect на `/login` при `AuthState.loading` |
-| Утечки Cubit | `close()` в `dispose()` экранов |
-| Специальность на экране врача | `specialtyName` через `GetSpecialtiesUseCase` |
-| Talker FAB без Overlay | Убран tooltip, навигация через `rootNavigatorKey` |
-
-### Рефакторинг
-
-| Область | Изменение |
-|---------|-----------|
-| Domain models | Отдельные файлы: `doctor.dart`, `user.dart`, `slot.dart`, … |
-| Use cases | Разбиты по `auth/` и `doctors/`, контракт `UseCase<T, Params>` |
-| UI | Экраны + `widgets/` внутри каждой feature |
-| DTO mapping | `lib/data/mappers/entity_mappers.dart` |
-| Логирование | `AppTalker` + цветные HTTP-логи, debug overlay |
-| Роутинг | Typed routes через `go_router_builder` |
-| Auth startup | `GetSavedTokenUseCase` вместо дублирующего `AutoLoginUseCase` |
